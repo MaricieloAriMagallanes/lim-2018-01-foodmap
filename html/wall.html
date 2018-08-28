@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Food Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../materialize.min.css" media="all" />
+    <link rel="stylesheet" href="../css/wall.css">
+
+    <!-- <script src="../js/app.js"></script> -->
+</head>
+<body >
+        <div class="hiden muro" id="wall">
+
+                <div class="row">
+                  <!--navcompletpmurochip-f-->
+                  <nav>
+                    <div class="nav-wrapper">
+                      <a href="#!" class="brand-logo center">   FoodMap   </a>
+                      <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+                        <i class="large navlogo material-icons">menu</i>
+                      </a>
+                      <ul class="left hide-on-med-and-down">
+                        <li>
+                          <a href="sass.html">Mural</a>
+                        </li>
+                        <li>
+                          <a href="badges.html">Perfil</a>
+                        </li>
+                        <li>
+                          <a id="btnLogout1">Cerrar Sesión</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+                  <ul class="sidenav" id="mobile-demo">
+                    <li>
+                      <a href="sass.html">Mural</a>
+                    </li>
+                    <li>
+                      <a href="badges.html">Perfil</a>
+                    </li>
+                    <li>
+                      <a id="btnLogout2">Cerrar Sesión</a>
+                    </li>
+                  </ul>
+                  <!-- nav acaba -->
+                </div>
+            </div>
+        </div>
+       <h3 class="welcome">Bienvenido</h3>
+       <div id="map"></div> 
+       <input type="text" id="coords"/>
+       <h4 class="titleSecond">Comida cerca de ti </h4>
+          <div class="input-field">
+              <i class="material-icons prefix">search</i>
+              <input type="text" placeholder="Filtrar restaurantes" id="autocomplete-input" class="autocomplete ">
+          </div>
+          
+              <span id= "restaurants" class="col s12 m6 l3 center-align">  
+              </span>
+           
+          
+
+          
+       <script>
+         var marker;
+         var coords = {};
+         //Funcion principal
+         initMap = function ()
+         {
+           //usamos la API para geolocolizar el usuario
+           navigator.geolocation.getCurrentPosition(
+             function(position){
+               coords ={
+                 lng: position.coords.longitude,
+                 lat: position.coords.latitude
+               };
+               setMapa(coords); //pasamos las coordenadas al metodo para crear el mapa
+
+             },function(error){console.log(error);});
+         }
+        function setMapa(coords)
+        {
+          //Se crea una nueva instancia del objeto mapa
+          var map = new google.maps.Map(document.getElementById('map'),
+          {
+              zoom:15,
+              center:new google.maps.LatLng(coords.lat,coords.lng),
+        });
+        //Creamos el marcador en el mapa con sus propieades
+        //para nuestro objetivo tenemos que poner el atributo draggable en true
+        marker = new google.maps.Marker({
+          map:map,
+          draggable:true,
+          animation: google.maps.Animation.DROP,
+          position: new google.maps.LatLng(coords.lat,coords.lng),
+        });
+        //Agregamos un evento al marcador unto con la funcion callback al igual que el evento
+        //cuando el usuario a soltao el marcador
+        marker.addListener('click', toggleBounce);
+        marker.addListener('dragend', function(event)
+        {
+          //escribimos las coordenadas de la posicion actual del marcador dentro del input
+          document.getElementById("coords").value=this.getPosition().lat()+","+ this.getPosition().lng();
+        });
+      }
+      //callback al hacer clic en el marcador lo que hace es quitar y poner la animacion BOUNCE
+      function toggleBounce(){
+        if (marker.getAnimation() !== null){
+          marker.setAnimation(null);
+        }else{
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      } 
+     //Para generar una data el google Maps
+      //   //New map
+      //    var map = new 
+      //    google.maps.Map(document.getElementById('map'),options);
+      //    //Add marker
+      //    var marker = new google.maps.Marker({
+      //     position:{lat:42.4668,lng:-70.9495},
+      //     map:map,
+      //     icon:''
+      //    });
+       </script>
+       <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+     <script src="../jquery-3.3.1.min.js"></script>
+         <script src="../materialize.min.js"></script>
+         <script src="../js/wall.js"></script>
+</body>
+</html>

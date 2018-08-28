@@ -1,0 +1,34 @@
+nav {
+    background-color: #ef5350 ;
+  }
+  
+   .container {
+    height: 100% !important
+  }
+ 
+
+  .muro {
+    background-color: #F1F1F1;
+    height: 100%;
+  }
+   #map{
+        height: 400px;
+        width: 80%;
+        margin-left: 130px;
+        padding-right: 20 px;
+      }
+      #coords{
+        width: 500px;
+      }
+      .welcome{
+        text-align: center;
+      }
+      .titleSecond{
+        text-align: center;
+      }
+      #restaurants{
+        text-align: center;
+      }
+      #modal{
+        text-align: center;
+      }
